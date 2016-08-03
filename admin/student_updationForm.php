@@ -33,7 +33,7 @@
 		{
 			$connection = Connection::connect();
 
-				$u_id = isset($_GET['stdID']) ? e($_GET['stdID']) : "";
+				$u_id = isset($_GET['stdID']) ? e($connection,$_GET['stdID']) : "";
 
 
 				$query = "SELECT * FROM Stud where std_id='$u_id'" ;
@@ -51,7 +51,7 @@
 					$fallID=$fall_ID;
 					$s_id=$loginID;
 				}
-			mysqli_close($connection);
+			//mysqli_close($connection);
 		}
 
 	?>
@@ -127,23 +127,23 @@
 							<div class="col-sm-4">
 								<select class="form-control selectpicker show-tick"  data-width="220px" id='fall_list'>
 												<?php
-
+												$connection = Connection::connect();
 
 													$query = "SELECT * FROM Fall";
 													$result = mysqli_query($connection, $query) ;
-
+													//print_r($query);die();
 													while($row = mysqli_fetch_row($result))
 													{
 														?>
-														<option value=<?php echo $row[1];?> > <?php echo $row[0];?> </option>
-															<?php
+														<option value="<?php echo $row[1];?>" > <?php echo $row[0];?> </option>
+														<?php
 															}
 												?>
 								</select>
 							</div>
-							<input type="hidden" id="f_id" name='fall_id' value='<?php echo $fall_ID; ?>' >
+							<input type="hidden" id="f_id" name='fall_id' value="<?php echo $fall_ID; ?>" >
 
-							<input type="hidden" id="student_user_id" name='std_id' value='<?php echo $u_id; ?>' >
+							<input type="hidden" id="student_user_id" name='std_id' value="<?php echo $u_id; ?>" >
 						</div>
 
 						<div class="form-group">

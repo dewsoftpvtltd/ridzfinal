@@ -35,8 +35,8 @@
 
 	$connection = Connection::connect();
 
-				$courseID = isset($_GET['courseID']) ? e($_GET['courseID']) : "";
-				echo $courseID;
+				$courseID = isset($_GET['courseID']) ? e($connection,$_GET['courseID']) : "";
+				//echo $courseID;
 
 				$query = "SELECT * FROM Courses where courseID='$courseID'" ;
 
@@ -47,7 +47,7 @@
 					extract($f);
 					$subject = $Subject ;
 					$semester=$Semester;
-					$time=$timming;
+					$time=$timing;
 					$day=$day;
 					$status=$status;
 					$fall_id=$Fall_ID;
@@ -128,6 +128,7 @@
 								<select class="selectpicker"  id='fall_list'>
 												<?php
 
+												$connection = Connection::connect();
 
 													$query = "SELECT * FROM Fall";
 													$result = mysqli_query($connection, $query) ;
@@ -137,7 +138,7 @@
 														?>
 														<option
 															value=<?php echo $row[1];?> <?php if($row[1] == $Fall_ID)
-															{ echo selected;} ?> > <?php echo $row[0];?>
+														 ?> > <?php echo $row[0];?>
 														</option>
 															<?php
 															}
