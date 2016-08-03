@@ -19,14 +19,16 @@
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Forms <span class="caret"></span></a>
       <ul class="dropdown-menu">
-        
+
         <li><a href="indexroles.php">User Registration</a></li>
         <li><a href="student.php">Student Registration</a></li>
 		<li><a href="teacher.php">Teacher Registration</a></li>
         <li><a href="courses.php">Course Registration</a></li>
         <li><a href="fall.php">Fall Registration</a></li>
         <li><a href="notification.php">Notification</a></li>
-		
+        <li><a href="TeacherCourse.php">Teacher Course</a></li>
+        <li><a href="TeacherFall.php">Teacher Fall</a></li>
+
       </ul>
     </li>
     <li class="dropdown">

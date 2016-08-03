@@ -4,18 +4,18 @@
 ?>
 
 <?php
-	function redirect($url) 
+	function redirect($url)
 	{
 		ob_start();
 		header('Location: '.$url);
 		ob_end_flush();
 		die();
-	
+
 	}
 
 	if(isset($_SESSION['login']) && $_SESSION['login'])
 	{
-			
+
 	}
 	else
 	{
@@ -26,20 +26,7 @@
 ?>
 	<head>
 	<?php
-		function connect_db()
-		{
-
-			$MySQL_Host         = "mysql.serversfree.com";
-			$MySQL_User         = "u957103950_mbins";
-			$MySQL_User_PASS    = "trrhfyp4";
-			$MySQL_Database     = "u957103950_usrdb";
-
-			$conn = mysql_connect($MySQL_Host, $MySQL_User, $MySQL_User_PASS) or die ("Unable to connect! " . mysql_error() );
-
-			mysql_select_db($MySQL_Database, $conn) or die ("Unable to select database " . mysql_error()  );
-
-			return $conn;
-		}
+		require_once('scripts/Connection.php');
 	?>
 	<title>
 			INS Admin Panel
@@ -70,7 +57,7 @@
 
 				for ( ; i < listSize; i++){
 					Fall_ID =  $($('#falllist option:selected')[i]).val() + ","  + Fall_ID ;
-					
+
 				}
 				$('#fallid').val(Fall_ID);
 			});
@@ -104,11 +91,12 @@
 									<option value="-1" > Select Teacher Name </option>
 								<?php
 
-								$connection=connect_db();
-								$query = "SELECT * FROM Teacher" ;
-								$result = mysql_query($query) ;
+								$connection = Connection::connect();
 
-								while($row = mysql_fetch_row($result))
+								$query = "SELECT * FROM Teacher" ;
+								$result = mysqli_query($connection, $query) ;
+
+								while($row = mysqli_fetch_row($result))
 								{
 									?>
 									<option value=<?php echo $row[4];?> > <?php echo $row[0];?> </option>
@@ -126,11 +114,11 @@
 								<select class="selectpicker" id="falllist" multiple="multiple">
 								<?php
 
-													$connection=connect_db();
-													$query = "SELECT * FROM Fall" ;
-													$result = mysql_query($query) ;
 
-														while($row = mysql_fetch_row($result))
+													$query = "SELECT * FROM Fall" ;
+													$result = mysqli_query($connection, $query) ;
+
+														while($row = mysqli_fetch_row($result))
 															{
 															?>
 															<option value=<?php echo $row[1];?> > <?php echo $row[0];?> </option>

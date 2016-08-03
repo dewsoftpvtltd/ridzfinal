@@ -1,32 +1,21 @@
 <?php
 
-    function connect_db()
-	{
-
-		$MySQL_Host         = "127.0.0.1";
-		$MySQL_User         = "homestead";
-		$MySQL_User_PASS    = "secret";
-		$MySQL_Database     = "ridz";
-
-		$conn = mysql_connect($MySQL_Host, $MySQL_User, $MySQL_User_PASS) or die ("Unable to connect! " . mysql_error() );
-
-		mysql_select_db($MySQL_Database, $conn) or die ("Unable to select database " . mysql_error()  );
-
-		return $conn;
-	}
+//add this to the top
+ require_once('Connection.php');
 
 	$tableName = "Courses";
 	if($_SERVER['REQUEST_METHOD'] == "POST")
 	{
 
-		$connection = connect_db();
-		$semester = isset($_POST['semester']) ? mysql_real_escape_string($_POST['semester']) : "";
-		$subject= isset($_POST['subject']) ? mysql_real_escape_string($_POST['subject']) : "";
-		$time = isset($_POST['time']) ? mysql_real_escape_string($_POST['time']) : "";
-		$day = isset($_POST['day']) ? mysql_real_escape_string($_POST['day']) : "";
-		$fall_id = isset($_POST['fall_id']) ? mysql_real_escape_string($_POST['fall_id']) : "";
-		$status = isset($_POST['status']) ? mysql_real_escape_string($_POST['status']) : "";
-		$courseID = isset($_POST['courseID']) ? mysql_real_escape_string($_POST['courseID']) : "";
+		$connection = Connection::connect();
+    
+		$semester = isset($_POST['semester']) ? e($_POST['semester']) : "";
+		$subject= isset($_POST['subject']) ? e($_POST['subject']) : "";
+		$time = isset($_POST['time']) ? e($_POST['time']) : "";
+		$day = isset($_POST['day']) ? e($_POST['day']) : "";
+		$fall_id = isset($_POST['fall_id']) ? e($_POST['fall_id']) : "";
+		$status = isset($_POST['status']) ? e($_POST['status']) : "";
+		$courseID = isset($_POST['courseID']) ? e($_POST['courseID']) : "";
 
 		if(!empty($courseID))
 		{
@@ -34,10 +23,10 @@
 				status =  '$status', courseID= '$courseID',  where courseID=$courseID";
 
 
-			$qur = mysql_query($query);
+			$qur = mysqli_query($query);
 
 		}
-		mysql_close($connection);
+		mysqli_close($connection);
 	}
 
 ?>

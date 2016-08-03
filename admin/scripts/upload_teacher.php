@@ -1,19 +1,7 @@
 <?php
- 	function connect_db()
-	{
+ 	require_once('Connection.php');
 
-		$MySQL_Host         = "mysql.serversfree.com";
-		$MySQL_User         = "u957103950_mbins";
-		$MySQL_User_PASS    = "trrhfyp4";
-		$MySQL_Database     = "u957103950_usrdb";
-    
-		$conn = mysql_connect($MySQL_Host, $MySQL_User, $MySQL_User_PASS) or die ("Unable to connect! " . mysql_error() );
-	 
-		mysql_select_db($MySQL_Database, $conn) or die ("Unable to select database " . mysql_error()  );
-		
-		return $conn;
-	}
-	function redirect($url) 
+	function redirect($url)
 	{
 		ob_start();
 		header('Location: '.$url);
@@ -22,32 +10,31 @@
 
 	}
 
-	$tableName = "Teacher";    
+	$tableName = "Teacher";
 	if($_SERVER['REQUEST_METHOD'] == "POST")
 	{
-		echo"hello";
-		$connection = connect_db();
-		$name = isset($_POST['name']) ? mysql_real_escape_string($_POST['name']) : "";
-		$address= isset($_POST['address']) ? mysql_real_escape_string($_POST['address']) : "";
-		$phone_no = isset($_POST['phone_no']) ? mysql_real_escape_string($_POST['phone_no']) : "";
-		$qualification = isset($_POST['qualification']) ? mysql_real_escape_string($_POST['qualification']) : "";
-		$email = isset($_POST['email']) ? mysql_real_escape_string($_POST['email']) : "";
-		$t_id = isset($_POST['t_login_id']) ? mysql_real_escape_string($_POST['t_login_id']) : "";
-		
-		echo $name;
-		echo $address;
+
+		$connection = Connection::connect();
+
+		$name = isset($_POST['name']) ? e($_POST['name']) : "";
+		$address= isset($_POST['address']) ? e($_POST['address']) : "";
+		$phone_no = isset($_POST['phone_no']) ? e($_POST['phone_no']) : "";
+		$qualification = isset($_POST['qualification']) ? e($_POST['qualification']) : "";
+		$email = isset($_POST['email']) ? e($_POST['email']) : "";
+		$t_id = isset($_POST['t_login_id']) ? e($_POST['t_login_id']) : "";
+
 		if(!empty($name) && !empty($address) && !empty($phone_no) &&!empty($qualification) && !empty($email) && !empty($t_id) )
 		{
-			echo"hira";
-			$query = "INSERT INTO   $tableName  (Name, Address, Phone_no, Qualification, Email_Id, loginID) 
+
+			$query = "INSERT INTO   $tableName  (Name, Address, Phone_no, Qualification, Email_Id, loginID)
 										Values('$name','$address', '$phone_no','$qualification','$email','$t_id') ";
+
+
+
+			$qur = mysqli_query($query);
+
 			
-			echo $query;
-			
-			$qur = mysql_query($query);
-			
-			mysql_close($connection);
-			
+
 			if($qur)
 			{
 				$url = "../teacher.php";
@@ -60,7 +47,7 @@
 			}
 
 		}
-		mysql_close($connection);
+		mysqli_close($connection);
 	}
 
 ?>

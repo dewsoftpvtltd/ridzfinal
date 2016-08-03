@@ -1,5 +1,7 @@
 <?php
+//add this to the top
  require_once('Connection.php');
+ 
 	function redirect($url)
 	{
 		ob_start();

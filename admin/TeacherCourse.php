@@ -1,20 +1,7 @@
 <html>
 	<head>
 	<?php
-		function connect_db()
-		{
-
-			$MySQL_Host         = "mysql.serversfree.com";
-			$MySQL_User         = "u957103950_mbins";
-			$MySQL_User_PASS    = "trrhfyp4";
-			$MySQL_Database     = "u957103950_usrdb";
-		
-			$conn = mysql_connect($MySQL_Host, $MySQL_User, $MySQL_User_PASS) or die ("Unable to connect! " . mysql_error() );
-		 
-			mysql_select_db($MySQL_Database, $conn) or die ("Unable to select database " . mysql_error()  );
-			
-			return $conn;
-		}
+		require_once('scripts/Connection.php');
 	?>
 	<title>
 		INS Admin Panel
@@ -27,12 +14,12 @@
 		<link href="http://select2.github.io/select2/select2-3.5.1/select2.css" rel="stylesheet" />
 		<script src="http://select2.github.io/select2/select2-3.5.1/select2.js"></script>
 
-		
+
 		<script type="text/javascript">
 
 			$(document).ready
 			(
-				function () 
+				function ()
 				{
 					$("#courselist").select2(
 					{
@@ -52,9 +39,9 @@
 						for ( ; i < listSize; i++)
 						{
 							Course_ID =  $($('#courselist option:selected')[i]).val() + ","  + Course_ID ;
-					
+
 						}
-					
+
 						$('#c_id').val(Course_ID);
 					});
 
@@ -84,14 +71,15 @@
 											<option value="-1" > Select Teacher Name </option>
 											<?php
 
-											$connection=connect_db();
-											$query = "SELECT * FROM Teacher" ;
-											$result = mysql_query($query) ;
+											$connection = Connection::connect();
 
-											while($row = mysql_fetch_row($result))
+											$query = "SELECT * FROM Teacher" ;
+											$result = mysqli_query($connection, $query) ;
+
+											while($row = mysqli_fetch_row($result))
 											{
 												?>
-												<option value=<?php echo $row[4];?> > <?php echo $row[0];?> </option>
+												<option value="<?php echo $row[4];?>" > <?php echo $row[0];?> </option>
 												<?php
 											}
 											?>
@@ -99,21 +87,20 @@
 									</div>
 									<input type="hidden" id="tf_id" name='t_id' value="-1" >
 							</div>
-						
+
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="user">Courses Name</label>
 								<div class="col-sm-4">
 									<select  id="courselist" multiple="multiple">
 									<?php
 
-										$connection=connect_db();
 										$query = "SELECT * FROM Courses" ;
-										$result = mysql_query($query) ;
+										$result = mysqli_query($connection, $query) ;
 
-										while($row = mysql_fetch_row($result))
+										while($row = mysqli_fetch_row($result))
 										{
 											?>
-											<option value=<?php echo $row[6];?> > <?php echo $row[0];?> </option>
+											<option value="<?php echo $row[6];?>" > <?php echo $row[0];?> </option>
 											<?php
 										}
 											?>
@@ -122,13 +109,13 @@
 								</div>
 								<input type="hidden" id="c_id" name='course_id' >
 							</div>
-					
-							<div class="form-group"> 
+
+							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
 									<button type="submit" value="Upload" class="btn btn-default">Save</button>
 								</div>
 							</div>
-						
+
 						</form>
 					</div>
 				</div>
