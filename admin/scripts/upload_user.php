@@ -1,21 +1,5 @@
 <?php
- 	function connect_db()
-	{
-
-    $MySQL_Host         = "127.0.0.1";
-    $MySQL_User         = "homestead";
-    $MySQL_User_PASS    = "secret";
-    $MySQL_Database     = "ridz";
-
-    try{
-      $conn = mysqli_connect('127.0.0.1', 'homestead', 'secret', 'ridz');
-      echo 'done';
-}catch(Exception $e){
-  echo $e->getMessage();
-}
-
-		return $conn;
-	}
+ require_once('Connection.php');
 	function redirect($url)
 	{
 		ob_start();
@@ -28,10 +12,10 @@
 	$tableName = "Login";
 	if($_SERVER['REQUEST_METHOD'] == "POST")
 	{
-		$connection = mysqli_connect('127.0.0.1', 'homestead', 'secret', 'ridz');
-		$uname = isset($_POST['uname']) ? mysqli_real_escape_string($connection,$_POST['uname']) : "";
-		$passwd = isset($_POST['passwd']) ? mysqli_real_escape_string($connection,$_POST['passwd']) : "";
-		$role = isset($_POST['role']) ? mysqli_real_escape_string($connection,$_POST['role']) : "";
+		$connection = Connection::connect();
+		$uname = isset($_POST['uname']) ? e($connection,$_POST['uname']) : "";
+		$passwd = isset($_POST['passwd']) ? e($connection,$_POST['passwd']) : "";
+		$role = isset($_POST['role']) ? e($connection,$_POST['role']) : "";
 
 		if(!empty($uname) && !empty($passwd) && !empty($role)  )
 		{
@@ -53,7 +37,7 @@
 			}
 
 		}
-		mysql_close($connection);
+		mysqli_close($connection);
 	}
 
 ?>
